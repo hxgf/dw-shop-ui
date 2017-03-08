@@ -1,0 +1,29 @@
+
+<div class="row">
+  <div class="medium-10 columns content-focus">
+
+
+    {{#if error}}<div class="checkout-error">Card Error: {{error}}</div>
+
+    {{else}}
+
+
+    <h3>Payment processed successfully</h3>
+    {{#ifCond transaction_type "stallion-add"}}
+    <h4>You can now <a href="/edit-listing/{{id}}">edit your new listing</a></h4>
+    {{/ifCond}}
+
+    {{#ifCond transaction_type "stallion-upgrade"}}
+    <h4>You can go back to <a href="/edit-listing/{{id}}">editing your listing</a> now.</h4>
+    {{/ifCond}}
+
+    {{/if}}
+
+
+
+  </div>
+  <div class="medium-2 columns sidebar">
+    {{> ads}}
+
+  </div>
+</div>

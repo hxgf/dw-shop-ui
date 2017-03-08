@@ -1,0 +1,199 @@
+
+<div class="row">
+  <div class="medium-10 columns content-focus">
+
+
+    <div class="row">
+
+      <div class="medium-12 columns checkout-order-container">
+
+
+
+        <ul class="checkout-list">
+          {{#if data.summary}}
+          <li>
+            <span class="data">
+              <span class="title">{{data.summary}}</span>
+              {{#if data.description}}<span class="details">{{data.description}}</span>{{/if}}
+            </span>
+            {{#if data.base_amount}}<span class="price">{{to_fixed data.base_amount 2}}</span>{{/if}}
+          </li>
+          {{/if}}
+
+
+        {{#if data.upgrades}}
+
+          {{#in_array data.upgrades "gallery"}}
+          <li>
+            <span class="data">
+              <span class="title">Photo Gallery</span>
+              <span class="details">Gallery of six (6) pictures</span>
+            </span>
+            <span class="price">10.00</span>
+          </li>
+          {{/in_array}}
+
+          {{#in_array data.upgrades "videos"}}
+          <li>
+            <span class="data">
+              <span class="title">Videos</span>
+              <span class="details">Up to four (4) embedded videos from Vimeo or YouTube</span>
+            </span>
+            <span class="price">5.00</span>
+          </li>
+          {{/in_array}}
+
+          {{#in_array data.upgrades "featured"}}
+          <li>
+            <span class="data">
+              <span class="title">Featured Listing</span>
+              <span class="details">90-day featured listing on our home page and sidebar</span>
+            </span>
+            <span class="price">90.00</span>
+          </li>
+          {{/in_array}}
+      {{/if}}
+        </ul>
+
+
+      </div>
+
+    </div>
+
+
+
+
+
+
+
+
+<div class="row">
+  <div class="medium-6 columns discount-form">
+
+    <form action="/checkout/discount" method="post">
+      <label>Discount Code:</label>
+      <input type="text" name="discount" id="discount-code" value="{{data.discount.code}}" />
+      <button><i class="fi-arrow-right"></i></button>
+      <div class="details">
+
+      </div>
+    </form>
+
+  </div>
+  <div class="medium-6 columns checkout-total">
+
+
+
+
+
+    <ul>
+
+      {{#if data.discount.code}}
+
+      <li class="discount">
+        <span class="price-label">
+          <!-- {{data.discount.details}} -->
+          Discount
+        </span>
+        <span class="price">
+          &mdash;&nbsp; <i>{{to_fixed data.discount.total 2}}</i>
+        </span>
+      </li>
+      {{/if}}
+
+      <li class="total">
+        <span class="price-label">
+          Total
+        </span>
+        <span class="price">
+          <small>$</small>{{to_fixed data.total 2}}
+        </span>
+      </li>
+
+    </ul>
+
+
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+    <form class="checkout" method="post" action="/checkout/process">
+
+      {{#if data.total}}
+      <h4>Billing Information:</h4>
+
+      <div class="row">
+        <div class="medium-6 columns">
+          <label>First Name</label>
+          <input type="text" name="first_name" />
+        </div>
+        <div class="medium-6 columns">
+          <label>Last Name</label>
+          <input type="text" name="last_name" />
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="medium-6 columns">
+          <label>Credit Card Number <small>(no spaces)</small></label>
+          <input type="text" class="card-number" maxlength="20" name="cc_n" />
+        </div>
+        <div class="medium-3 columns">
+          <!-- <small>(MM/YYYY)</small> -->
+          <label>Exp Date</label>
+          <input type="text" maxlength="7" class="card-exp" placeholder="MM/YYYY" name="cc_e" />
+        </div>
+        <div class="medium-3 columns">
+          <label>Security Code</label>
+          <input type="text" maxlength="4" class="card-cvc" name="cc_cvv" />
+        </div>
+      </div>
+      <input type="hidden" name="token" />
+      {{/if}}
+
+
+      <div class="fine-print">
+      <!-- // disclaimers, terms, fine print -->
+      </div>
+      <input type="hidden" name="transaction_id" value="{{data._id}}" />
+      <input type="hidden" name="type" value="{{data.type}}" />
+      <input type="hidden" name="total" value="{{data.total}}" />
+
+    </form>
+
+    {{#if data.total}}
+    <button class="checkout-button">Check out</button>
+    {{else}}
+    <button class="checkout-button">Create listing</button>
+    {{/if}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+  <div class="medium-2 columns sidebar">
+    {{> ads}}
+
+  </div>
+</div>
